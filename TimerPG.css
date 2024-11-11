@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif; 
+}
+
+body {
+    background: radial-gradient(farthest-corner at center, rgba(36, 123, 160, 1) 0%, rgba(0, 100, 148, 1) 30%, rgba(19, 41, 61, 1) 100%);
+    background-image: url('IMG/fd_mtr.png'), radial-gradient(farthest-corner at center, rgba(36, 123, 160, 1) 0%, rgba(0, 100, 148, 1) 30%, rgba(19, 41, 61, 1) 100%);
+    background-repeat: repeat y, no-repeat;
+    background-position: 0% 0%, 100% 100%;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+/* Estilização dos botões e elementos de login */
+.btn, #lgn, #cd {
+    font-family: DoubleBlass; 
+    color: aliceblue; 
+}
+
+/* Estilização do título no container */
+.container h1 {
+    color: white; 
+    font-size: 36px; 
+    text-align: center; 
+}
+
+/* Estilização geral do container */
+.container {
+    display: flex; /* Usa flexbox para alinhamento */
+    align-items: center; 
+    justify-content: center; 
+    background-color: rgba(0, 0, 0, 0.5); 
+    height: 400px; 
+    width: 350px; 
+    padding: 20px; 
+    border-radius: 40px; 
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); 
+}
+
+/* Estilização do botão dentro do container */
+.container .btn {
+    width: 100%;
+    height: 45px; 
+    background-color: #ff6c00; 
+    border: none; 
+    outline: none; 
+    border-radius: 40px; 
+    margin-top: 10px; 
+    font-size: 1em; 
+}
+
+/* Estilização para o texto simples */
+.texto {
+    color: white; 
+    font-size: 20px; 
+    margin: 0; 
+}
+
+/* Estilização do temporizador */
+.timer {
+    font-size: 30px; 
+    font-weight: 600; 
+    color: white; 
+    margin: 20px 0; 
+}
+
+/* Estilização para o personagem animado */
+.character {
+    width: 150px; 
+    height: 150px; 
+    border-radius: 10px; 
+    margin-right: 60%; 
+    margin-top: 20px; 
+    animation: float 3s ease-in-out infinite; /* Animação de flutuação */
+    position: relative; /* Permite o uso de transformações */
+}
+
+/* Animação de flutuação do personagem */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0); /* Posição inicial e final */
+    }
+    50% {
+        transform: translateY(-20px); /* Flutua para cima no meio da animação */
+    }
+}
+
+/* Estilização da imagem dentro do personagem */
+.character img {
+    transform: rotate(10deg); /* Rotaciona a imagem em 10 graus */
+}
+
+/* Estilização adicional para o container */
+.container {
+    text-align: center; 
+    background-color: #2e3b4e; 
+    padding: 20px; 
+    border-radius: 10px; 
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); 
+    background-size: cover; 
+    background-position: center; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    height: 450px; 
+    width: 450px; 
+    padding: 20px; 
+    border-radius: 40px; 
+    background-color: rgba(0, 0, 0, 0.5); 
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); 
+}
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questões</title>
+</head>
+<body>
+  <form id="qForm">
+    <label for="enunciado">Enunciado:</label>
+    <textarea name="enunciado" id="enunciado"></textarea> <br>
+    <label for="A">Item A:</label>
+    <textarea name="A" id="A"></textarea> <br>
+    <label for="B">Item B:</label>
+    <textarea name="B" id="B"></textarea> <br>
+    <label for="C">Item C:</label>
+    <textarea name="C" id="C"></textarea> <br>
+    <label for="D">Item D:</label>
+    <textarea name="D" id="D"></textarea> <br>
+    <label for="E">Item E:</label>
+    <textarea name="E" id="E"></textarea> <br>
+
+    <p>Item Correto:</p>
+    <input type="radio" value="A" name="itemCorreto" id="itemA">
+    <label for="itemA">A</label>
+    <input type="radio" value="B" name="itemCorreto" id="itemB">
+    <label for="itemB">B</label>
+    <input type="radio" value="C" name="itemCorreto" id="itemC">
+    <label for="itemC">C</label>
+    <input type="radio" value="D" name="itemCorreto" id="itemD">
+    <label for="itemD">D</label>
+    <input type="radio" value="E" name="itemCorreto" id="itemE">
+    <label for="itemE">E</label>
+
+    <br>
+
+    <label for="descritor">Descritor:</label>
+    <select name="descritorId" id="descritor">
+      <%%>
+    </select>
+  </form>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+</html>

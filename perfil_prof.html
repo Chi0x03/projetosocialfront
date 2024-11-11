@@ -1,0 +1,546 @@
+<!-- pág onde o usuario pode mudar seus dados, editar seu perfil melhor dizendo -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PublicClass - Tela de Perfil</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="avatar.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-image: url('IMG/fd_mtr.png'), radial-gradient(farthest-corner at center, rgba(36, 123, 160, 1) 0%, rgba(0, 100, 148, 1) 30%, rgba(19, 41, 61, 1) 100%);
+            background-repeat: repeat-y;
+            background-position: 0% 0%, 100% 100%;
+            background-size: cover;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        i {
+            border-radius: 25px;
+            background: none;
+            border: none;
+            margin-right: 10px;
+        }
+
+        #imgrb {
+            width: 200px;
+            height: 200px;
+            margin-top: -5%;
+            margin-right: 10px;
+
+        }
+
+        @font-face {
+            font-family: DoubleBass;
+            src: url('Fonte/DoubleBass-regular-trial.ttf');
+        }
+
+        h1 {
+            font-family: DoubleBass;
+            margin: 0px;
+
+        }
+
+        /* .nav-buttons {
+            position: fixed;
+            top: 0;
+            left: 0px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: transparent;
+            gap: 10px;
+        }
+
+        .nav-buttons .btn {
+            font-size: 1.2rem;
+            color: white;
+            font-weight: bold;
+            background-color: #ff9600;
+            border: none;
+            border-radius: 0 50px 50px 0;
+            padding: 10px 20px;
+            width: 200px;
+            text-align: left;
+            transition: all 0.3s ease;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 0;
+
+        }
+
+        .nav-buttons .btn:hover {
+            transform: scale(1.05);
+            background-color: #ffd27f;
+            color: #1f496e;
+        } */
+
+        .nav-buttons {
+            position: fixed;
+            top: 0;
+            left: 0px;
+            /* Metade da largura do botão para que só metade apareça */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0;
+            background-color: transparent;
+            gap: 5px;
+
+
+        }
+
+        .nav-buttons .btn {
+            font-size: 1.2rem;
+            color: white;
+            font-weight: bold;
+            background-color: #ff9600;
+            /* Cor laranja dos botões */
+            border: none;
+            border-top-right-radius: 50px;
+            /* Bordas arredondadas */
+            border-bottom-right-radius: 50px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            width: 200px;
+            text-align: left;
+            transition: all 0.3s ease;
+            height: 60px;
+            gap: 10px;
+
+
+
+
+        }
+
+
+
+        .nav-buttons .btn:hover {
+            background-color: #ffd27f;
+            /* Laranja claro ao passar o mouse */
+            color: #1f496e;
+            left: 0;
+            transform: scale(1.05);
+            /* Ao passar o mouse, o botão aparece por completo */
+        }
+
+
+
+
+        /* .nav-buttons .btn:hover {
+            transform: scale(1.05);
+        } */
+
+
+        /* Espaço do conteúdo principal */
+        .main-content {
+            margin-left: 100px;
+            /* Espaço para acomodar a parte visível dos botões */
+            padding: 30px;
+            text-align: right;
+            /* Alinha o texto à direita */
+        }
+
+        .main-content h1 {
+            font-size: 120px;
+            font-weight: bold;
+            color: #ffffff;
+            /* Cor branca para o título */
+            margin-bottom: 20px;
+            text-align: center;
+
+        }
+
+        .form-container {
+            background-color: #055680;
+            /* Azul para o formulário */
+            padding: 20px;
+            border-radius: 25px;
+            width: 900px;
+            height: 700px;
+            margin-left: auto;
+            margin-left: auto;
+            margin-right: auto;
+            /* Alinha o formulário ao centro */
+            text-align: left;
+            align-items: center;
+        }
+
+        .form-container label {
+            color: white;
+            font-weight: bold;
+        }
+
+        .form-container .form-control {
+            background-color: #d9e6f2;
+            /* Fundo claro para inputs */
+
+
+
+            border-radius: 25px;
+        }
+
+        .btn-save {
+            background-color: #ff4040;
+            /* Vermelho para o botão Salvar */
+            color: white;
+            width: 50px;
+            border-radius: 25px;
+
+        }
+
+        .btn-save:hover {
+            background-color: #cc3333;
+        }
+
+        .input-group-text {
+            background-color: transparent;
+            border: none;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .nav-buttons {
+                position: relative;
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-around;
+                padding: 10px 0;
+                left: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 15px;
+                text-align: center;
+            }
+
+            .form-container {
+                width: 100%;
+                text-align: left;
+            }
+        }
+
+        .user-name {
+            display: flex;
+            align-items: center;
+            border-top-right-radius: 50px;
+            /* Bordas arredondadas */
+            border-bottom-right-radius: 50px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            background-color: #FF8C00;
+            color: white;
+            padding: auto;
+            border-radius: px;
+            width: 300px;
+            height: 60px;
+            margin-bottom: 10%;
+            margin-top: 8%;
+        }
+
+        .user-name h2 {
+            font-size: 22px;
+            padding-top: 10px;
+            padding-left: 25px;
+            font-family: DoubleBass;
+
+        }
+
+        .perfil_ft {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            padding-left: 10px;
+
+
+
+        }
+
+        @media (min-width: 576px) and (max-width: 768px) {
+            h1 {
+                font-size: 100px
+            }
+
+
+        }
+
+        .form-group {
+            gap: 10px;
+        }
+
+        #togglePassword {
+            position: absolute;
+            right: 15px;
+            cursor: pointer;
+            color: #6c757d;
+        }
+
+        .input-group {
+            position: relative;
+
+        }
+
+        .btn-save-final {
+            background-color: #ff4040;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+
+        .btn-save-final:hover {
+            background-color: #cc3333;
+            color: #ffffff
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid p-0">
+        <div class="row no-gutters">
+            <!-- Nome do Usuário -->
+            <div class="user-name">
+                <img class="perfil_ft" src="" alt="" style="margin-left: 15px;">
+                <h2 id="nomeProfessor">user</h2>
+            </div>
+
+            <!-- Botões de Navegação -->
+            <div class="col-2 nav-buttons mt-4">
+                <button class="btn" style="width: 250px;"><i class="fas fa-user"></i>Meu perfil</button>
+                <button class="btn" onclick="window.location.href='MontarP1.html'"><i class="fas fa-edit"></i>Montar prova</button>
+                <!-- <button class="btn" onclick="window.location.href='MontarP2.html'"><i class="fas fa-edit"></i>Montar prova</button> -->
+                <button class="btn" onclick="window.location.href='resultados.html'"><i class="fas fa-chart-bar"></i>Resultados</button>
+                <button class="btn" onclick="window.location.href='ajuda.html'"><i class="fas fa-question-circle"></i>Ajuda</button>
+            </div>
+
+
+
+            <!-- Conteúdo Principal -->
+            <div class="col main-content">
+                <div class="container mt-5 mb-2">
+                    <div class="row">
+                        <div class="col" style="display: flex; align-items: center; justify-content: center;">
+                            <img src="IMG/roboc.png" alt="" id="imgrb">
+                            <h1 class="tit text-center">PublicClass</h1>
+                        </div>
+                    </div>
+
+                    <div class="form-container">
+                        <form id="formUpdate">
+
+                            <div class="row align-items-center mb-4">
+                                <label for="nome" class="ml-4">Nome:</label>
+                                <div class="form-group d-flex align-items-center">
+
+                                    <img class="perfil_ft mr-2" src="" alt="" style="width: 40px; height: 40px;"
+                                        onclick="openModal()">
+                                    <input type="text" class="form-control" id="nomePerfil" value="">
+                                    <button type="submit" class="btn btn-save">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                            <path
+                                                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="form-group col-12 col-sm-12 col-md-6">
+                                    <label for="disciplina">Disciplina:</label>
+                                    <select class="form-control w-100" name="disciplina" id="disciplina">
+                                        <option></option>
+                                        <option value="Português">Português</option>
+                                        <option value="Matemática">Matemática</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group col-12 col-sm-12 col-md-6 ">
+                                    <label for="instituicao">Instituição:</label>
+                                    <select class="form-control" name="instituicao" id="instituicao">
+                                        <option></option>
+                                        <option value="EEEP Maria Môsa da Silva">EEEP Maria Môsa da Silva</option>
+                                        <option value="EEMTI Josefa Clementino de Oliveira">EEMTI Josefa Clementino de
+                                            Oliveira</option>
+                                        <option value="EEMTI Almir Pinto">EEMTI Almir Pinto</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-12 col-sm-12 col-md-6">
+                                    <label for="email">Email:</label>
+                                    <input type="email" class="form-control w-100" id="email">
+                                </div>
+                                <div class="form-group col-12 col-sm-12 col-md-6">
+                                    <label for="senha">Senha:</label>
+                                    <div class="input-group d-flex align-items-center w-100">
+                                        <input type="password" class="form-control" id="senha" value=""
+                                            style="border-radius: 25px;">
+                                        <span class="input-group-text" id="togglePassword"
+                                            style="text-decoration: none;">
+                                            <i class="fa fa-eye"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="text-end mt-4">
+                                <button type="submit" class="btn btn-save-final">Salvar</button>
+                            </div>
+                        </form>
+
+
+
+                        <!-- Modal para seleção de avatar -->
+                        <div id="myModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close" onclick="closeModal()">&times;</span>
+                                <!-- Botão de fechar o modal -->
+                                <h2>Selecione um Avatar</h2> <!-- Título do modal -->
+                                <div class="image-options">
+                                    <img src="IMG/01.jpg" onclick="selectImage(this)"> <!-- Avatar 1 -->
+                                    <img src="IMG/02.jpg" onclick="selectImage(this)"> <!-- Avatar 2 -->
+                                    <img src="IMG/03.jpg" onclick="selectImage(this)"> <!-- Avatar 3 -->
+                                    <img src="IMG/04.jpg" onclick="selectImage(this)"> <!-- Avatar 4 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript e Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <script>
+
+
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordField = document.getElementById('senha');
+            const icon = this.querySelector('i');
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            icon.classList.toggle('fa-eye-slash');
+        });
+
+    </script>
+
+    <script>
+
+        function salvarDados() {
+
+        }
+
+        /* Função para abrir o modal */
+        function openModal() {
+            document.getElementById("myModal").style.display = "flex"; /* Mostra o modal com display flex */
+        }
+
+        /* Função para fechar o modal */
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none"; /* Esconde o modal */
+        }
+
+        /* Função para selecionar o avatar */
+        function selectImage(image) {
+            document.querySelector('.avatar').style.backgroundImage = `url(${image.src})`; /* Atualiza a imagem do avatar */
+            closeModal(); /* Fecha o modal após a seleção */
+        }
+
+        /* Função para iniciar a animação de fade-out ao clicar no botão "Entrar no jogo" */
+        document.getElementById("startButton").addEventListener("click", function (event) {
+            event.preventDefault(); /* Impede o envio padrão do formulário */
+
+            /* Aplica a classe de fade-out ao corpo da página */
+            document.body.classList.add('fade-out');
+
+            /* Após 1 segundo (tempo da animação), redireciona para a página "boa_sorte.html" */
+            setTimeout(function () {
+                window.location.href = "boa_sorte.html"; /* Redireciona para outra página */
+            }, 1000); /* Tempo em milissegundos da animação (1 segundo) */
+        });
+    </script>
+
+    <script>
+        const form = document.querySelector('#formUpdate');
+
+        // Adiciona um evento de envio ao formulário
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Previne o comportamento padrão de recarregar a página
+
+            // Cria um objeto com os dados do formulário
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            console.log(data)
+
+            try {
+                // Faz a requisição POST enviando os dados como JSON
+                const response = await axios.post('professor/update', data);
+                console.log('Resposta:', response.data);
+            } catch (error) {
+                console.error('Erro ao enviar o formulário:', error);
+            }
+        });
+
+        axios.get('/professor')
+            .then((response) => {
+                const nome = document.querySelector("#nomeProfessor");
+                const nomeNoPerfil = document.querySelector("#nomePerfil");
+                const disciplina = document.querySelector("#disciplina");
+                const instituicao = document.querySelector("#instituicao");
+                const email = document.querySelector("#email");
+                const senha = document.querySelector("#senha");
+
+                // Campos de texto
+                nome.innerHTML = response.data.nome;
+                nomeNoPerfil.value = response.data.nome;
+                email.value = response.data.email;
+                senha.value = response.data.senha;
+
+                // Campos de select
+                disciplina.value = response.data.disciplina;
+                instituicao.value = response.data.instituicao;
+
+                console.log(response.data);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>

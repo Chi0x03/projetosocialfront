@@ -1,0 +1,450 @@
+<!-- Estrutura pronta. Faltando ligar aos dados -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PublicClass Questões</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            background-image: url('IMG/fd_mtr.png'),
+                radial-gradient(farthest-corner at center, rgba(36, 123, 160, 1) 0%, rgba(0, 100, 148, 1) 30%, rgba(19, 41, 61, 1) 100%);
+            background-repeat: repeat y, repeat x;
+            background-position: 0% 0%, 100% 100%;
+            background-size: cover;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin-top: 10%;
+        }
+
+        .container-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .questao {
+            background-color: #10374a;
+            padding: 20px 30px;
+            border-radius: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            height: 400px;
+            overflow-y: auto;
+            opacity: 0.9;
+        }
+
+        .questao::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .questao::-webkit-scrollbar-track {
+            background: #0d2d3d;
+            border-radius: 10px;
+        }
+
+        .questao::-webkit-scrollbar-thumb {
+            background-color: #ffffff;
+            border-radius: 10px;
+            border: 2px solid #0d2d3d;
+        }
+
+        .questao h4 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            padding: 15px;
+        }
+
+        .option-container {
+            margin-bottom: 10px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            text-align: left;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        .option-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .option-btn input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.5);
+            cursor: pointer;
+        }
+
+        .item1,
+        .item2,
+        .item3,
+        .item4,
+        .item5 {
+            background-color: #f48b31;
+            border-radius: 25px;
+        }
+
+        .confirmar {
+            background-color: #35d073;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+            /* Ocupa toda a largura das opções */
+            max-width: 600px;
+            /* Limita o tamanho máximo do botão */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .confirmar:hover {
+            background-color: #2db363;
+            transform: scale(1.05);
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        @media (max-width: 991.98px) {
+            .row {
+                flex-direction: column;
+            }
+
+            .col-questao,
+            .col-opcoes {
+                flex: 0 0 100%;
+            }
+
+            .confirmar {
+                width: 100%;
+                /* Garante que o botão continue responsivo */
+            }
+        }
+
+        .questao,
+        .option-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .col-questao {
+            flex: 0 0 45%;
+        }
+
+        .col-opcoes {
+            flex: 0 0 50%;
+            margin-top: 5%;
+        }
+
+        #timer {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            color: white;
+            font-size: 1.2rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
+
+        @media (min-width: 992px) {
+            .confirmar {
+                width: 200px;
+                margin-left: 60%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container container-content">
+        <div class="row">
+            <div class="col-questao mb-4">
+                <div class="robopgq">
+                    <!-- <img src="IMG/roboc.png" alt=""> -->
+                </div>
+                <div class="questao" id="questao">
+                    <p></p>
+                </div>
+            </div>
+
+            <div class="col-opcoes">
+                <form id="formOpcoes">
+                    <div class="option-container">
+                        <label class="option-btn item1">
+                            <input type="radio" name="option" value="A" id="item1">
+                        </label>
+                    </div>
+
+                    <div class="option-container">
+                        <label class="option-btn item2">
+                            <input type="radio" name="option" value="B" id="item2">
+                        </label>
+                    </div>
+
+                    <div class="option-container">
+                        <label class="option-btn item3">
+                            <input type="radio" name="option" value="C" id="item3">
+                        </label>
+                    </div>
+
+                    <div class="option-container">
+                        <label class="option-btn item4">
+                            <input type="radio" name="option" value="D" id="item4">
+                        </label>
+                    </div>
+
+                    <div class="option-container">
+                        <label class="option-btn item5">
+                            <input type="radio" name="option" value="E" id="item5">
+                        </label>
+                    </div>
+
+                    <div class="btn-container">
+                        <button class="confirmar mb-4" type="submit" id="confirm">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="timer">00:00</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // Função para obter o valor de um cookie pelo nome
+        function getCookie(name) {
+            const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+            if (match) {
+                return match[2];
+            }
+            return null;
+        }
+
+        // Função para definir um cookie com nome, valor e tempo de expiração
+        function setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // Expiração em dias
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        const socket = io();
+        let questao = null;
+        let sala = null;
+        let idProva = null;
+        let timerInterval;
+        let seconds = 0;
+        let minutes = 0;
+        let totalSeconds = 0;
+
+        // Carrega as respostas do localStorage ou inicializa como um array vazio
+        let respostas = JSON.parse(localStorage.getItem('respostas')) || [];
+
+        // Função para iniciar o timer
+        function startTimer() {
+            seconds = 0;
+            minutes = 0;
+            timerInterval = setInterval(() => {
+                seconds++;
+                totalSeconds++;
+
+                if (seconds === 60) {
+                    seconds = 0;
+                    minutes++;
+                }
+
+                let timeString = `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+                document.getElementById('timer').textContent = timeString;
+            }, 1000);
+        }
+
+        // Função para parar o timer e retornar o tempo gasto na questão
+        function stopTimer() {
+            clearInterval(timerInterval);
+            return (minutes * 60) + seconds;
+        }
+
+        // Captura da sala e do nome
+        const params = new URLSearchParams(window.location.search);
+        sala = params.get('sala');
+        if (sala) {
+            setCookie('sala', sala, 1);
+        } else {
+            sala = getCookie('sala');
+        }
+
+        let nome = params.get('nome');
+        if (nome) {
+            setCookie('nome', nome, 1);
+        } else {
+            nome = getCookie('nome');
+        }
+
+        let limparRespostas = params.get('limparRespostas');
+        if (limparRespostas) {
+            localStorage.removeItem('respostas');
+        }
+
+        // Envia o evento de entrada do aluno
+        socket.emit('join-quiz', { roomId: sala, nome });
+
+        // Recebe a questão do professor e exibe
+        // Recebe a questão do professor e exibe
+        socket.on('question', ({ question, provaId }) => {
+            const questaoElement = document.getElementById('questao');
+            questao = question;
+            idProva = provaId;
+            questaoElement.innerHTML = question.enunciado;
+
+            // Exibe as alternativas sem sobrescrever o HTML dos inputs
+            document.querySelector('.item1').innerHTML = `<input type="radio" name="option" value="A" id="item1">${question.alternativaA}`;
+            document.querySelector('.item2').innerHTML = `<input type="radio" name="option" value="B" id="item2">${question.alternativaB}`;
+            document.querySelector('.item3').innerHTML = `<input type="radio" name="option" value="C" id="item3">${question.alternativaC}`;
+            document.querySelector('.item4').innerHTML = `<input type="radio" name="option" value="D" id="item4">${question.alternativaD}`;
+            document.querySelector('.item5').innerHTML = `<input type="radio" name="option" value="E" id="item5">${question.alternativaE}`;
+
+            startTimer(); // Inicia o timer ao receber a questão
+
+            // Reativa o formulário
+            enableFormInputs();
+        });
+
+        // Função para reativar todos os inputs do formulário
+        function enableFormInputs() {
+            const inputs = form.querySelectorAll('input, button');
+            inputs.forEach(input => {
+                input.disabled = false; // Remove o atributo disabled
+            });
+        }
+
+
+        // Função para processar a resposta e enviá-la
+        function onAnswerSelected(itemMarcado) {
+            const tempoGasto = stopTimer(); // Obtém o tempo gasto na questão
+
+            // Armazena a resposta e tempo gasto
+            const resposta = {
+                questaoId: questao.id,
+                aluno: nome,
+                itemMarcado,
+                acertou: itemMarcado === questao.respostaCorreta, // Verifica se está correta
+                provaId: idProva
+            };
+
+            respostas.push(resposta);
+            localStorage.setItem('respostas', JSON.stringify(respostas)); // Salva no localStorage
+
+            console.log(`Tempo gasto na questão ${questao.id}: ${tempoGasto} segundos`);
+            console.log(respostas);
+        }
+
+        // Envia a resposta ao professor
+        const form = document.getElementById('formOpcoes');
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const selectedOption = form.querySelector('input[name="option"]:checked');
+            if (selectedOption) {
+                const itemMarcado = selectedOption.value;
+
+                // Envia a resposta ao servidor
+                socket.emit('answer', {
+                    roomId: sala,
+                    itemMarcado,
+                    alunoId: socket.id,
+                    provaId: idProva
+                });
+
+                // Armazena a resposta no array
+                onAnswerSelected(itemMarcado);
+
+                if (itemMarcado !== questao.respostaCorreta) {
+                    alert(questao.explicacao);
+                }
+
+                // Desmarca a opção
+                selectedOption.checked = false;
+
+                // Desativa todos os inputs do formulário
+                disableFormInputs();
+            } else {
+                alert("Por favor, selecione uma resposta.");
+            }
+        });
+
+        // Função para desativar todos os inputs do formulário
+        function disableFormInputs() {
+            const inputs = form.querySelectorAll('input, button');
+            inputs.forEach(input => {
+                input.disabled = true; // Desativa o input
+            });
+        }
+
+        // Quando o quiz é concluído, envia as respostas e tempo total
+        socket.on('quiz-completed', ({ provaId }) => {
+            const postData = {
+                nomeAluno: nome,
+                totalAcertos: respostas.filter(r => r.acertou).length,
+                respostas,
+                tempoDeResposta: totalSeconds
+            };
+
+            // fazer um loop nas repostas e adicionar o id da prova
+            for (let i = 0; i < respostas.length; i++) {
+                respostas[i].provaId = parseInt(provaId);
+            }
+
+            console.log('Dados para envio:', postData);
+
+            try {
+                axios.post('/vista_pedagogica/' + provaId + '/add-answer', postData)
+                    .then(response => {
+                        console.log("Resposta salva com sucesso!", response);
+                        localStorage.removeItem('respostas'); // Limpa as respostas do localStorage após o envio
+                    })
+                    .catch(error => {
+                        console.error("Erro ao salvar resposta:", error);
+                    });
+            } catch (error) {
+                console.error("Erro ao tentar enviar os dados:", error);
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>

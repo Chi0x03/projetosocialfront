@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PublicClass Ranking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        @font-face {
+            font-family: DoubleBass;
+            src: url('Fonte/DoubleBass-regular-trial.ttf');
+        }
+
+        @font-face {
+            font-family: DoubleBassB;
+            src: url('Fonte/DoubleBass-Bold-trial.ttf');
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-image: url('IMG/fd_mtr.png'), radial-gradient(farthest-corner at center, rgba(36, 123, 160, 1) 0%, rgba(0, 100, 148, 1) 30%, rgba(19, 41, 61, 1) 100%);
+            background-repeat: repeat-y;
+            background-position: 0% 0%, 100% 100%;
+            background-size: cover;
+            width: 100%;
+            height: 100vh;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .classifc {
+            font-family: DoubleBass;
+
+        }
+
+        .container {
+            display: flex;
+            width: 90%;
+            position: relative;
+            height: 100%;
+        }
+
+
+        .quadro {
+            background-color: rgba(41, 96, 127, 0.6);
+            border: none;
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            left: 40%;
+        }
+
+        .quadro img {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: 200px;
+            z-index: 0;
+
+        }
+
+
+        .ranking {
+            width: 80%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0px;
+            position: relative;
+            margin: 0px;
+            left: -5%;
+        }
+
+        .ranking .tit {
+            font-size: 100px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-family: DoubleBass;
+            z-index: 1;
+
+        }
+
+        .ranking h2 {
+            font-weight: bold;
+            font-size: 30px;
+            margin-top: 0;
+            text-align: center;
+            z-index: 1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .podio {
+            margin-left: 20%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .posicao1 {
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            margin-right: 0%;
+            margin-top: -5%;
+
+            z-index: 1;
+        }
+
+        .posicao1 img {
+            width: 100px;
+            height: auto;
+            position: fixed;
+            margin-left: -13%;
+            margin-bottom: 15%;
+        }
+
+        .posicao1 h3 {
+            font-size: 24px;
+            margin: 5px 0;
+        }
+
+        .posicao1 p {
+            font-size: 18px;
+            margin: 0;
+        }
+
+
+        .posicao2 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 11%;
+            margin-left: 6%;
+            z-index: 1;
+
+        }
+
+
+        .posicao2 img {
+            width: 100px;
+            height: auto;
+            position: fixed;
+            margin-bottom: 9%;
+            margin-left: -32.5%;
+
+        }
+
+        .posicao2 h3 {
+            font-size: 24px;
+            margin: 5px 0;
+
+        }
+
+        .posicao2 p {
+            font-size: 18px;
+            margin-bottom: 10%;
+        }
+
+        .posicao3 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 13%;
+            margin-right: 5%;
+            z-index: 1;
+
+        }
+
+        .posicao3 img {
+            width: 100px;
+            height: auto;
+            margin-bottom: 8%;
+            margin-left: 7%;
+            position: fixed;
+
+
+        }
+
+        .posicao3 h3 {
+            font-size: 20px;
+            margin: 5px 0;
+        }
+
+        .posicao3 p {
+            font-size: 18px;
+            margin: 0;
+        }
+
+
+
+        .barra-lateral {
+            position: fixed;
+            width: 25%;
+            background: rgba(49, 49, 49, 0.6);
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            height: 100%;
+            overflow-y: auto;
+            right: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .barra-lateral::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .barra-lateral::-webkit-scrollbar-track {
+            background: #0d2d3d;
+            border-radius: 10px;
+        }
+
+        .barra-lateral::-webkit-scrollbar-thumb {
+            background-color: #ffffff;
+            border-radius: 10px;
+            border: 2px solid #0d2d3d;
+        }
+
+        .barra-lateral.oculta {
+            transform: translateX(100%);
+        }
+
+        .barra-lateral h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .barra-lateral ul {
+            list-style: none;
+            padding: 0;
+
+
+
+        }
+
+        .barra-lateral li {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            border-radius: 10px;
+            transition: 0.3s;
+            gap: 15px;
+
+        }
+
+        .barra-lateral li:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .barra-lateral img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .tempo {
+            font-size: 12px;
+            margin-left: auto;
+            color: #ccc;
+        }
+
+        .menu {
+            display: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 100;
+
+        }
+
+
+        @media (max-width: 768px) {
+            .barra-lateral {
+                display: none;
+            }
+
+            .menu {
+                display: block;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .ranking h1 {
+                font-size: 36px;
+            }
+
+            .ranking h2 {
+                font-size: 30px;
+            }
+
+            .posicao h3 {
+                font-size: 18px;
+            }
+
+            .posicao p {
+                font-size: 14px;
+            }
+        }
+
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .classificacao {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            margin-top: 5%;
+        }
+
+        .perfilft {
+            padding-top: 10px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        #img_lres {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+
+        }
+
+
+        .resul,
+        .temp {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .perfilft_prata {
+            border: 4px solid #e1e1e1;
+            border-radius: 50%;
+        }
+
+        .perfilft_ouro {
+            border: 4px solid #f8df24;
+            border-radius: 50%;
+        }
+
+        .perfilft_bronze {
+            border: 4px solid #ff9100;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="ranking">
+            <div class="quadro">
+                <img class="" src="IMG/robo_index.png" alt="Robô"
+                    style="position: absolute; top: 20px; margin-top:15vh; left: 15px; width: 150px; height: auto; z-index: 10; animation: float 3s ease-in-out infinite;">
+
+                <h1 class="tit mt-4 mb-2">PublicClass</h1>
+                <h2>Ranking</h2>
+                <div class="podio">
+                    <div class="posicao2">
+
+                        <h1>2</h1>
+                        <div class="resul">
+                            <img src="IMG/correto_rank.png" id="img_lres">
+                            <p>00/00</p>
+                        </div>
+
+                        <div class="temp">
+                            <img src="IMG/rel_ranking.png" id="img_lres">
+                            <p>99:99</p>
+
+                        </div>
+                        <h3 style="text-align: center;">Nome</h3> <!-- jogado 2º lugar -->
+
+                        <img class="perfilft_prata mt-4" src="IMG/avatar.png" alt="">
+
+                    </div>
+                    <div class="posicao1">
+
+                        <h1>1</h1>
+                        <div class="resul">
+                            <img src="IMG/correto_rank.png" id="img_lres">
+                            <p>00/00</p>
+
+                        </div>
+
+                        <div class="temp">
+                            <img src="IMG/rel_ranking.png" id="img_lres">
+                            <p>99:99</p>
+
+                        </div>
+
+                        <h3 style="text-align: center;">Nome</h3><!-- jogado 1º lugar -->
+                        <img class="perfilft_ouro" src="IMG/avatar.png" alt="">
+                    </div>
+                    <div class="posicao3">
+
+                        <h1>3</h1>
+                        <div class="resul">
+                            <img src="IMG/correto_rank.png" id="img_lres">
+                            <p>00/00</p>
+
+                        </div>
+
+                        <div class="temp">
+                            <img src="IMG/rel_ranking.png" id="img_lres">
+                            <p>99:99</p>
+
+                        </div>
+                        <h3 style="text-align: center;">Nome</h3><!-- jogado 3º lugar -->
+                        <img class="perfilft_bronze" src="IMG/avatar.png" alt="">
+                    </div>
+                </div>
+                <img src="IMG/ranking.png" alt="Imagem de fundo">
+            </div>
+        </div>
+        <div class="barra-lateral right-section" id="barra-lateral">
+            <div class="classificacao">
+                <h2 class="classifc mt-2">Classificação</h2>
+                <div class="imagens-titulo">
+                    <img src="IMG/correto_rank.png" alt="Imagem 1">
+                    <img src="IMG/rel_ranking.png" alt="Imagem 2">
+                </div>
+            </div>
+
+            <ul id="ranking-list"></ul>
+        </div>
+
+        <div class="menu" id="menu">☰</div>
+    </div>
+
+    <script>
+        let dadosRanking = [];
+
+        const params = new URLSearchParams(window.location.search);
+
+        const provaId = params.get('id');
+
+        axios.get('/vista_pedagogica/ranking/' + provaId)
+            .then((response) => {
+                const dadosRanking = response.data;
+
+                // Referências ao pódio e à lista de classificação
+                const posicao1 = document.querySelector('.posicao1');
+                const posicao2 = document.querySelector('.posicao2');
+                const posicao3 = document.querySelector('.posicao3');
+                const rankingList = document.querySelector('.ranking-list'); // Adicione uma lista para o restante dos jogadores
+
+                // Exibe os três primeiros no pódio
+                dadosRanking.forEach((dado, index) => {
+                    if (index === 0) {
+                        posicao1.querySelector('h3').textContent = dado.nomeAluno;
+                        posicao1.querySelector('.resul p').textContent = `${dado.totalAcertos}/${dado.totalQuestoes}`;
+                        posicao1.querySelector('.temp p').textContent = formatTime(dado.tempoDeResposta);
+                    } else if (index === 1) {
+                        posicao2.querySelector('h3').textContent = dado.nomeAluno;
+                        posicao2.querySelector('.resul p').textContent = `${dado.totalAcertos}/${dado.totalQuestoes}`;
+                        posicao2.querySelector('.temp p').textContent = formatTime(dado.tempoDeResposta);
+                    } else if (index === 2) {
+                        posicao3.querySelector('h3').textContent = dado.nomeAluno;
+                        posicao3.querySelector('.resul p').textContent = `${dado.totalAcertos}/${dado.totalQuestoes}`;
+                        posicao3.querySelector('.temp p').textContent = formatTime(dado.tempoDeResposta);
+                    } else {
+                        // Adiciona os demais jogadores na lista
+                        const li = document.createElement('li');
+                        li.innerHTML = `
+                    <img src="${dado.img}" alt="${dado.nomeAluno}">
+                    <span>${dado.nomeAluno} - ${dado.totalAcertos}/${dado.totalQuestoes} 
+                    <span class="tempo">${formatTime(dado.tempoDeResposta)}</span></span>
+                `;
+                        rankingList.appendChild(li);
+                    }
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+        // função que converte segundos no formato mm:ss
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        const rankingList = document.getElementById('ranking-list');
+
+        const menuButton = document.getElementById('menu');
+        const barraLateral = document.getElementById('barra-lateral');
+
+        menuButton.addEventListener('click', () => {
+            barraLateral.classList.toggle('oculta');
+        });
+
+        function setCookie(name, value, days) {
+            let date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        function getCookie(name) {
+            let nameEQ = name + "=";
+            let ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+/* Estilo para o modal */
+.modal {
+    display: none; /* O modal não é visível inicialmente */
+    position: fixed; /* Fixa o modal na tela, independentemente do scroll */
+    z-index: 1; /* Define a ordem do modal sobre outros elementos */
+    left: 0;
+    top: 0;
+    width: 100%; /* Ocupa 100% da largura da tela */
+    height: 100%; /* Ocupa 100% da altura da tela */
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro semitransparente */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+/* Conteúdo do modal */
+.modal-content {
+    background: rgba(0, 100, 148, 0.85); /* Fundo azul semitransparente */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 10px; /* Bordas arredondadas */
+    text-align: center; /* Centraliza o texto */
+    width: 300px; /* Largura fixa do modal */
+    color: white; /* Cor do texto */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra em volta do modal */
+    position: relative; /* Posição relativa para manipulação futura */
+    border: 2px dotted rgba(255, 255, 255, 0.5); /* Borda pontilhada semitransparente */
+    animation: animateBorder 2s linear infinite; /* Animação contínua das bordas */
+}
+
+/* Botão de fechar (ícone X) no modal */
+.close {
+    color: #aaa; /* Cor cinza para o ícone */
+    float: right; /* Alinha o botão à direita */
+    font-size: 28px; /* Tamanho da fonte do ícone */
+    font-weight: bold; /* Fonte em negrito */
+}
+
+/* Efeito de hover no botão de fechar */
+.close:hover,
+.close:focus {
+    color: black; /* Altera a cor para preto ao passar o mouse */
+    text-decoration: none; /* Remove sublinhado */
+    cursor: pointer; /* Muda o cursor para a mãozinha */
+}
+
+/* Estilo para as opções de avatar */
+.image-options img {
+    width: 80px; /* Largura das imagens do avatar */
+    height: 80px; /* Altura das imagens */
+    border-radius: 50%; /* Torna as imagens circulares */
+    margin: 10px; /* Espaçamento entre as imagens */
+    cursor: pointer; /* Muda o cursor para a mãozinha */
+    border: 3px solid rgba(255, 255, 255, 0.6); /* Borda semitransparente ao redor das imagens */
+    transition: border-color 0.3s ease; /* Transição suave na mudança de cor da borda */
+}
+
+/* Efeito de hover nas imagens do avatar */
+.image-options img:hover {
+    border-color: rgba(255, 255, 255, 1); /* Borda branca sólida ao passar o mouse */
+}
+
+/* Animação das bordas do modal */
+@keyframes animateBorder {
+    0% {
+        border-color: rgba(255, 255, 255, 0.5); /* Cor inicial das bordas */
+    }
+    50% {
+        border-color: rgba(255, 255, 255, 1); /* Cor branca sólida no meio da animação */
+    }
+    100% {
+        border-color: rgba(255, 255, 255, 0.5); /* Volta à cor semitransparente */
+    }
+}
+
+/* Transição para efeito de fade-out */
+.fade-out {
+    animation: fadeOut 1s forwards; /* Aplica a animação de fade-out com duração de 1 segundo */
+}
+
+/* Definição da animação de fade-out */
+@keyframes fadeOut {
+    from {
+        opacity: 1; /* Começa com 100% de opacidade */
+    }
+    to {
+        opacity: 0; /* Termina com 0% de opacidade */
+    }
+}

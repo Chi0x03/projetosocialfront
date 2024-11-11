@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>PublicClass</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: 'DoubleBass';
+            src: url('Fonte/DoubleBass-regular-trial.ttf');
+        }
+
+        @font-face {
+            font-family: 'DoubleBassB';
+            src: url('Fonte/DoubleBass-Bold-trial.ttf');
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('IMG/fundo.png');
+            color: white;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            /* Impede a rolagem da página inteira */
+            display: flex;
+        }
+
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 100%;
+        }
+
+        .esquerda,
+        .direita {
+            background-color: rgba(33, 83, 106, 0.7);
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px;
+        }
+
+        .esquerda {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .alternativas {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .alternativa {
+            background-color: #f3751e;
+            border-radius: 10px;
+            height: 150px;
+            position: relative;
+            font-size: 100px;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #1979aa;
+            border-radius: 50%;
+            color: white;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .direita {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .status-header {
+            background-color: #f3751e;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            border-radius: 5px;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .status-list {
+            width: 100%;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            background-color: rgba(39, 110, 143, 0.7);
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .status {
+            margin-left: auto;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        .avatar {
+            margin-right: 10px;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="esquerda" style="width: 100%;">
+
+            <img src="IMG/public.png" height="130px" width="130px" style="margin-top: 2%; margin-bottom: 2%;">
+            <h1 class="titulo"
+                style="text-align: center; margin-bottom: 5%;font-size: 42px; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+                <div>
+                    <p>
+                        Código da sala: <span id="codSala"></span>
+                    </p>
+                </div>
+                <br>
+                Quantidade de
+                respostas por alternativa <br> Questão
+                <span id="numQuestao">1</span>
+            </h1>
+
+            <div class="alternativas">
+                <div class="alternativa">
+                    <div class="letter" style="font-family: 'DoubleBassB';">
+                        A
+                    </div>
+                    <div class="count" id="count-A">0</div>
+                </div>
+                <div class="alternativa">
+                    <div class="letter" style="font-family: 'DoubleBassB';">
+                        B
+                    </div>
+                    <div class="count" id="count-B">0</div>
+                </div>
+                <div class="alternativa">
+                    <div class="letter" style="font-family: 'DoubleBassB';">
+                        C
+                    </div>
+                    <div class="count" id="count-C">0</div>
+                </div>
+                <div class="alternativa">
+                    <div class="letter" style="font-family: 'DoubleBassB';">
+                        D
+                    </div>
+                    <div class="count" id="count-D">0</div>
+                </div>
+                <div class="alternativa">
+                    <div class="letter" style="font-family: 'DoubleBassB';">
+                        E
+                    </div>
+                    <div class="count" id="count-E">0</div>
+                </div>
+                <a id="proximaQuestao" style="text-decoration: none;">
+                    <div class="alternativa" style="background-color: #e74c3c; font-size: 40px;">
+                        <h5>Próxima questão</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="direita">
+            <div class="status-header">
+                <h3>Status das Respostas</h3>
+            </div>
+            <div class="status-header" style="background-color: #e74c3c;">
+                <h3><span id="numAlunos"></span> Respostas restantes</h3>
+            </div>
+            <div class="status-list" id="status-list">
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+    //generae hex code
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    const salaId = getRandomColor();
+
+    const elementoSala = document.getElementById('codSala');
+    elementoSala.innerHTML = salaId;
+
+
+</script>
+
+<script>
+    const socket = io();
+    let prova = null;
+    const params = new URLSearchParams(window.location.search);
+    let questionIndex = 0;
+    let quantidadeAlunos = 0;
+    const proximaQuestao = document.getElementById('proximaQuestao');
+
+    let provaId = params.get('provaId') || getCookie('provaId');
+    // let sala = params.get('sala') || getCookie('sala');
+    let sala = salaId
+    // let nome = params.get('nome') || getCookie('nome');
+    let nome = 'professor'
+
+    if (params.get('reiniciar') === 'true') {
+        questionIndex = 0;
+        localStorage.setItem('questionIndex', questionIndex);
+    }
+
+    axios.get('/provas/' + provaId)
+        .then((response) => {
+            prova = response.data;
+            if (prova && prova.questoes && prova.questoes.length > 0) {
+                // socket.emit('primeira-questao', { roomId: sala, provaId: provaId, question: prova.questoes[0] });
+                socket.emit('join-quiz', { roomId: sala, provaId, nome, isProfessor: true, question: prova.questoes[0] });
+                console.log(prova)
+            } else {
+                console.error('Prova ou questões não disponíveis');
+            }
+        })
+        .catch((error) => {
+            console.error('Erro ao buscar prova:', error);
+        });
+
+    if (provaId) {
+        setCookie('provaId', provaId, 1);
+    }
+    if (sala) {
+        setCookie('sala', sala, 1);
+    }
+    if (nome) {
+        setCookie('nome', nome, 1);
+    }
+
+    socket.on('alunos-count', ({ count }) => {
+        document.getElementById('numAlunos').innerHTML = count - 1;
+        quantidadeAlunos = count;
+    });
+    let savedQuestionIndex = localStorage.getItem('questionIndex');
+    if (savedQuestionIndex) {
+        questionIndex = parseInt(savedQuestionIndex);  // Recupera e usa o índice salvo
+        document.getElementById('numQuestao').innerText = questionIndex + 1;  // Atualiza o número da questão
+    }
+
+    // Modificar o evento de "Próxima Questão" para salvar o índice
+    proximaQuestao.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        document.getElementById('numAlunos').innerHTML = quantidadeAlunos - 1;
+        questionIndex++;
+
+        // Salva o índice da questão no localStorage
+        localStorage.setItem('questionIndex', questionIndex);
+
+        if (questionIndex < prova.questoes.length) {
+            if (questionIndex == prova.questoes.length - 1) {
+                // substitui o botão de proxima questão por um botão de finalizar prova
+                proximaQuestao.innerHTML = '<div class="alternativa" style="background-color: #e74c3c; font-size: 40px;"><h5>Finalizar prova</h5></div>';
+            }
+            document.getElementById('numQuestao').innerHTML = questionIndex + 1;
+            socket.emit('next-question', { roomId: sala, currentQuestion: prova.questoes[questionIndex] });
+            console.log(prova.questoes[questionIndex]);
+        } else {
+            console.log('Não há mais questões.');
+            alert('Não há mais questões. Prova finalizada!');
+            socket.emit('finish-quiz', { roomId: sala, provaId });
+            questionIndex = 0;
+            localStorage.setItem('questionIndex', questionIndex);
+            window.location.href = '/RankPG.html?id=' + provaId;
+        }
+
+        // loop para alterar a imagem de todos os status para interrogação
+        let statusList = document.getElementById('status-list');
+        for (let i = 0; i < statusList.children.length; i++) {
+            let item = statusList.children[i];
+            item.querySelector('.status img').src = 'IMG/interrogacao.png';
+            item.querySelector('.status img').alt = 'Interrogação';
+        }
+    });
+
+    socket.on('update-answer-count', (counts) => {
+        document.getElementById('count-A').innerText = counts.A;
+        document.getElementById('count-B').innerText = counts.B;
+        document.getElementById('count-C').innerText = counts.C;
+        document.getElementById('count-D').innerText = counts.D;
+        document.getElementById('count-E').innerText = counts.E;
+    });
+
+    socket.on('status-list', ({ nome, id }) => {
+        if (nome == 'professor') {
+            return;
+        }
+        let statusList = document.getElementById('status-list');
+
+        // Cria o container do item de status
+        let item = document.createElement('div');
+        item.className = 'status-item';
+        item.id = id;
+
+        // Cria o avatar e insere a imagem
+        let avatarDiv = document.createElement('div');
+        avatarDiv.className = 'avatar';
+        let avatarImg = document.createElement('img');
+        avatarImg.src = 'IMG/avatar.png';
+        avatarImg.height = 40;
+        avatarImg.width = 40;
+        avatarDiv.appendChild(avatarImg);
+
+        // Cria o elemento do nome do aluno
+        let nameDiv = document.createElement('div');
+        nameDiv.className = 'student-name';
+        nameDiv.textContent = nome;
+
+        // Cria o status com o ícone de interrogação
+        let statusDiv = document.createElement('div');
+        statusDiv.className = 'status';
+        let statusImg = document.createElement('img');
+        statusImg.height = 35;
+        statusImg.width = 35;
+        statusImg.src = 'IMG/interrogacao.png'; // Ícone padrão de interrogação
+        statusDiv.appendChild(statusImg);
+
+        // Adiciona avatar, nome e status ao item
+        item.appendChild(avatarDiv);
+        item.appendChild(nameDiv);
+        item.appendChild(statusDiv);
+
+        // Adiciona o item à lista de status
+        statusList.appendChild(item);
+    });
+
+    socket.on('aluno-desconectado', ({ id }) => {
+        let item = document.getElementById(id);
+        if (item) {
+            item.remove();
+        }
+    });
+
+    socket.on('aluno-answered', ({ alunoId }) => {
+        let item = document.getElementById(alunoId);
+        document.getElementById('numAlunos').innerHTML = parseInt(document.getElementById('numAlunos').innerHTML) - 1;
+
+        if (item) {
+            // Encontra a div de status e altera a imagem para o ícone de correto
+            let statusDiv = item.querySelector('.status img');
+
+            if (statusDiv) {
+                statusDiv.src = 'IMG/correto.png'; // Define o ícone como correto
+                statusDiv.alt = 'Correto';
+            } else {
+                console.error(`Elemento de status não encontrado para o aluno ${alunoId}`);
+            }
+        } else {
+            console.error(`Elemento não encontrado para o aluno com ID ${alunoId}`);
+        }
+    });
+
+    function setCookie(name, value, days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        let expires = "expires=" + date.toUTCString();
+        document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
+
+    function getCookie(name) {
+        let nameEQ = name + "=";
+        let ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+</script>
+
+</html>

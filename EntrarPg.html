@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Entrar</title>
+    <link rel="stylesheet" href="EstiloLP.css"> 
+    <style>
+        /* Estilo para o modal */
+        .modal {
+            display: none; /* O modal não é visível inicialmente */
+            position: fixed; /* Fixa o modal na tela, independentemente do scroll */
+            z-index: 1; /* Define a ordem do modal sobre outros elementos */
+            left: 0;
+            top: 0;
+            width: 100%; /* Ocupa 100% da largura da tela */
+            height: 100%; /* Ocupa 100% da altura da tela */
+            background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro semitransparente */
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center; /* Centraliza verticalmente */
+        }
+
+        /* Conteúdo do modal */
+        .modal-content {
+            background: rgba(0, 100, 148, 0.85); /* Fundo azul semitransparente */
+            padding: 20px; /* Espaçamento interno */
+            border-radius: 10px; /* Bordas arredondadas */
+            text-align: center; /* Centraliza o texto */
+            width: 300px; /* Largura fixa do modal */
+            color: white; /* Cor do texto */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra em volta do modal */
+            position: relative; /* Posição relativa para manipulação futura */
+            border: 2px dotted rgba(255, 255, 255, 0.5); /* Borda pontilhada semitransparente */
+            animation: animateBorder 2s linear infinite; /* Animação contínua das bordas */
+        }
+
+        /* Botão de fechar (ícone X) no modal */
+        .close {
+            color: #aaa; /* Cor cinza para o ícone */
+            float: right; /* Alinha o botão à direita */
+            font-size: 28px; /* Tamanho da fonte do ícone */
+            font-weight: bold; /* Fonte em negrito */
+        }
+
+        /* Efeito de hover no botão de fechar */
+        .close:hover,
+        .close:focus {
+            color: black; /* Altera a cor para preto ao passar o mouse */
+            text-decoration: none; /* Remove sublinhado */
+            cursor: pointer; /* Muda o cursor para a mãozinha */
+        }
+
+        /* Estilo para as opções de avatar */
+        .image-options img {
+            width: 80px; /* Largura das imagens do avatar */
+            height: 80px; /* Altura das imagens */
+            border-radius: 50%; /* Torna as imagens circulares */
+            margin: 10px; /* Espaçamento entre as imagens */
+            cursor: pointer; /* Muda o cursor para a mãozinha */
+            border: 3px solid rgba(255, 255, 255, 0.6); /* Borda semitransparente ao redor das imagens */
+            transition: border-color 0.3s ease; /* Transição suave na mudança de cor da borda */
+        }
+
+        /* Efeito de hover nas imagens do avatar */
+        .image-options img:hover {
+            border-color: rgba(255, 255, 255, 1); /* Borda branca sólida ao passar o mouse */
+        }
+
+        /* Animação das bordas do modal */
+        @keyframes animateBorder {
+            0% {
+                border-color: rgba(255, 255, 255, 0.5); /* Cor inicial das bordas */
+            }
+            50% {
+                border-color: rgba(255, 255, 255, 1); /* Cor branca sólida no meio da animação */
+            }
+            100% {
+                border-color: rgba(255, 255, 255, 0.5); /* Volta à cor semitransparente */
+            }
+        }
+
+        /* Transição para efeito de fade-out */
+        .fade-out {
+            animation: fadeOut 1s forwards; /* Aplica a animação de fade-out com duração de 1 segundo */
+        }
+
+        /* Definição da animação de fade-out */
+        @keyframes fadeOut {
+            from {
+                opacity: 1; /* Começa com 100% de opacidade */
+            }
+            to {
+                opacity: 0; /* Termina com 0% de opacidade */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form>
+            <div class="avatar" onclick="openModal()"></div> <!-- Área de avatar que, ao ser clicada, abre o modal -->
+            
+            <div class="input-box">
+                <input type="text" required id="nome" placeholder="Seu nome"> <!-- Campo para inserir o nome -->
+            </div>
+            
+            <div class="input-box">
+                <input type="text" required id="sala" placeholder="Código da sala"> <!-- Campo para inserir o código da sala -->
+            </div>
+            <button id="startButton" type="submit" class="btn">Entrar no jogo</button> 
+        </form>
+    </div>
+
+    <!-- Modal para seleção de avatar -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span> <!-- Botão de fechar o modal -->
+            <h2>Selecione um Avatar</h2> <!-- Título do modal -->
+            <div class="image-options">
+                <img src="IMG/01.jpg" onclick="selectImage(this)"> <!-- Avatar 1 -->
+                <img src="IMG/02.jpg" onclick="selectImage(this)"> <!-- Avatar 2 -->
+                <img src="IMG/03.jpg" onclick="selectImage(this)"> <!-- Avatar 3 -->
+                <img src="IMG/04.jpg" onclick="selectImage(this)"> <!-- Avatar 4 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* Função para abrir o modal */
+        function openModal() {
+            document.getElementById("myModal").style.display = "flex"; /* Mostra o modal com display flex */
+        }
+
+        /* Função para fechar o modal */
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none"; /* Esconde o modal */
+        }
+
+        /* Função para selecionar o avatar */
+        function selectImage(image) {
+            document.querySelector('.avatar').style.backgroundImage = `url(${image.src})`; /* Atualiza a imagem do avatar */
+            closeModal(); /* Fecha o modal após a seleção */
+        }
+
+        // função para pegar o nome e sala e salvar no cookie
+        function setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`; 
+        }
+
+        function getCookie(name) {
+            const decodedCookies = decodeURIComponent(document.cookie);
+            const cookiesArray = decodedCookies.split('; ');
+            for (const cookie of cookiesArray) {
+                const [key, value] = cookie.split('=');
+                if (key === name) {
+                    return value;
+                }
+            }
+            return null;
+        } 
+
+        // Captura o nome e a sala no formulário
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const sala = document.getElementById('sala').value;
+            setCookie('nome', nome, 1);
+            setCookie('sala', sala, 1);
+            
+            document.body.classList.add('fade-out');
+
+            /* Após 1 segundo (tempo da animação), redireciona para a página "boa_sorte.html" */
+            setTimeout(function() {
+                window.location.href = "boa_sorte.html"; /* Redireciona para outra página */
+            }, 1000); /* Tempo em milissegundos da animação (1 segundo) */
+        });
+    </script>
+    <script>
+        
+    </script>
+</body>
+</html>

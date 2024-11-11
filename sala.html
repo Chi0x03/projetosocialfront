@@ -1,0 +1,296 @@
+<!-- onde é mostrado o código da sala e  quem já está -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Alunos</title>
+    <style>
+        /* Estilos gerais */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('IMG/fd_mtr.png'), radial-gradient(farthest-corner at center, rgba(36, 123, 160, 1) 0%, rgba(0, 100, 148, 1) 30%, rgba(19, 41, 61, 1) 100%);
+            background-repeat: repeat-y;
+            background-position: 0% 0%, 100% 100%;
+            background-size: cover;
+            /* background-position: center; */
+            /* background-attachment: fixed;  */
+
+        }
+
+        @font-face {
+            font-family: DoubleBassB;
+            src: url('Fonte/DoubleBass-Bold-trial.ttf');
+        }
+
+
+
+        .fora {}
+
+        .robo {
+            margin-bottom: 0%;
+            margin-left: -15%;
+
+
+            width: 450px;
+            height: 350px;
+
+
+
+        }
+
+        .container {
+            width: 80%;
+            margin: -60px auto;
+            background-color: #ffb000;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            /* overflow-y: auto; */
+            max-height: 600px;
+            margin-bottom: 20%;
+        }
+
+        /* 
+        .container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .container::-webkit-scrollbar-track {
+            background: #0d2d3d;
+            border-radius: 10px;
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background-color: #ffffff;
+            border-radius: 10px;
+            border: 2px solid #0d2d3d;
+        } */
+
+        .container.oculta {
+            transform: translateX(100%);
+        }
+
+        /* Seção do código da sala */
+        .codigo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .p {
+            font-size: 100px;
+            font-weight: bold;
+            margin-top: 0%;
+            margin-bottom: -5%;
+            margin-left: 30%;
+            text-align: center;
+            color: white;
+            display: flex;
+            /* justify-content: center; */
+            align-items: center;
+            /* font-family: DoubleBassB; */
+
+        }
+
+        .span {
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 0px;
+        }
+
+
+
+        /* Lista de alunos */
+        .lista-alunos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .aluno {
+            display: flex;
+            align-items: center;
+            background-color: #003366;
+            border-radius: 25px;
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .aluno .imagem {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: white;
+            /* Substitua pela imagem depois */
+            margin-right: 10px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .lista-alunos {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lista-alunos {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="fora">
+        <div class="p"><img src="IMG/robo_index.png" class="robo">
+            <p id="salaId"></p>
+        </div>
+    </div>
+
+
+
+    <div class="container">
+
+        <div class="codigo">
+
+
+        </div>
+
+        <div class="lista-alunos">
+            <!-- <div class="aluno">
+                <div class="imagem"></div>
+                <p>Biel</p>
+            </div>
+            <div class="aluno">
+                <div class="imagem"></div>
+                <p>Julia</p>
+            </div>
+            <div class="aluno">
+                <div class="imagem"></div>
+                <p>Caio</p>
+            </div>
+            <div class="aluno">
+                <div class="imagem"></div>
+                <p>João Pedro</p>
+            </div>
+            <div class="aluno">
+                <div class="imagem"></div>
+                <p>Nayra</p>
+            </div>
+            <div class="aluno">
+                <div class="imagem"></div>
+                <p>Mariana</p>
+            </div>
+            <div class="aluno">
+                <div class="imagem"></div>
+                <p>Riquelme</p>
+            </div>
+            <div class="aluno">
+                <div class="imagem"></div>
+                <p>Luciana</p>
+            </div>
+            <div class="aluno">
+                <div class="imagem"></div>
+                <p>Isabeli</p>
+            </div>
+            <div class="aluno">
+                <div class="imagem"></div>
+                <p>Paulo Sergio</p>
+            </div>
+
+            <div class="aluno">
+                <div class="imagem"></div>
+                <p>Luciana</p>
+            </div>
+            <div class="aluno">
+                <div class="imagem"></div>
+                <p>Isabeli</p>
+            </div>
+            <div class="aluno">
+                <div class="imagem"></div>
+                <p>Paulo Sergio</p>
+            </div>
+
+            <div class="aluno">
+                <div class="imagem"></div>
+                <p>Isabeli</p>
+            </div>
+            <div class="aluno">
+                <div class="imagem"></div>
+                <p>Paulo Sergio</p>
+            </div>
+
+            <div class="aluno">
+                <div class="imagem"></div>
+                <p>Isabeli</p>
+            </div>
+            <div class="aluno">
+                <div class="imagem"></div>
+                <p>Paulo Sergio</p>
+            </div> -->
+
+
+
+        </div>
+
+        <div>
+            <div class="botao" style="margin-top: 30px;">
+                <button id="botao" disabled style="color: #ffffff; background-color: #0d2d3d; border: none; border-radius: 10px; padding: 20px 30px; font-family: 'DoubleBassB';" onclick="window.location.href='/professor_questoes.html'">Iniciar</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    //generae hex code
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    const salaId = getRandomColor();
+
+    const elementoSala = document.getElementById('salaId');
+    elementoSala.innerHTML = salaId;
+
+
+</script>
+<script>
+    const socket = io();
+    const lista_alunos = document.querySelector('.lista-alunos');
+
+    socket.emit('join-quiz', { roomId: salaId, aluno: 'Professor' });
+
+    socket.on('alunos-count', ({ count, aluno, id }) => {
+        if (count !== 1) {
+            const div = document.createElement('div');
+            div.classList.add('aluno');
+            div.attributes.userId = id;
+
+            const imagem = document.createElement('div');
+            imagem.classList.add('imagem');
+            const p = document.createElement('p');
+            p.textContent = aluno;
+
+            div.appendChild(imagem);
+            div.appendChild(p);
+            lista_alunos.appendChild(div);
+
+            const botao = document.getElementById('botao');
+            botao.disabled = false;
+        }
+    })
+</script>
+
+</html>

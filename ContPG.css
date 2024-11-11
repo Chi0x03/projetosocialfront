@@ -1,0 +1,70 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    background: radial-gradient(farthest-corner at center, rgba(36, 123, 160, 1) 0%, rgba(0, 100, 148, 1) 30%, rgba(19, 41, 61, 1) 100%);
+    background-image: url('IMG/fd_mtr.png'), radial-gradient(farthest-corner at center, rgba(36, 123, 160, 1) 0%, rgba(0, 100, 148, 1) 30%, rgba(19, 41, 61, 1) 100%);
+    background-repeat: repeat-y, no-repeat;
+    background-position: 0% 0%, 100% 100%;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container que centraliza os elementos da contagem regressiva */
+.countdown-container {
+    display: flex; /* Usa flexbox para facilitar o alinhamento */
+    justify-content: center; /* Centraliza os elementos horizontalmente */
+    align-items: center; /* Centraliza os elementos verticalmente */
+    position: relative; /* Permite o posicionamento absoluto dos números dentro do container */
+    width: 100%; /* Largura total do container */
+    height: 100%; /* Altura total do container */
+}
+
+/* Estilização para os números da contagem */
+.number {
+    position: absolute; /* Posiciona os números de forma que se sobreponham */
+    width: 400px; /* Define a largura do número */
+    opacity: 0; /* Começa invisível */
+    animation: showNumber 1s ease-in-out forwards; /* Animação que faz o número aparecer e desaparecer */
+}
+
+/* Definição da animação para mostrar e esconder os números */
+@keyframes showNumber {
+    0% {
+        opacity: 0; /* Número invisível no início */
+        transform: scale(0); /* Escala zero, ou seja, invisível */
+    }
+    50% {
+        opacity: 1; /* Número totalmente visível no meio da animação */
+        transform: scale(1.2); /* Número ligeiramente maior no meio da animação */
+    }
+    100% {
+        opacity: 0; /* O número volta a ser invisível no fim da animação */
+        transform: scale(0); /* Escala novamente zero ao final */
+    }
+}
+
+/* Definição dos tempos de atraso para os números da contagem regressiva */
+
+/* Primeiro número, sem atraso */
+.number:nth-child(1) {
+    animation-delay: 0s; /* Aparece imediatamente */
+}
+
+/* Segundo número, aparece com 1 segundo de atraso */
+.number:nth-child(2) {
+    animation-delay: 1s; /* Aparece após 1 segundo */
+}
+
+/* Terceiro número, aparece com 2 segundos de atraso */
+.number:nth-child(3) {
+    animation-delay: 2s; /* Aparece após 2 segundos */
+}
